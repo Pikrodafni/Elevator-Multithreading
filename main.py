@@ -7,7 +7,8 @@ from collections import deque
 exitFlag = 0
 global counter
 global queue
-global asansio1
+global asansio1,asansio2,asansio3,asansio4,asansio5
+global f0,f1,f2,f3,f4
 
 def girenSayisi():
    insan = random.randint(1, 10)
@@ -41,7 +42,7 @@ def qucikar(counter):
       queue2.enque([ins, kat])
       counter -=1
 
-def asansör():
+def asansörBinis(queue):
    tmp = queue.deque()
    binecek = 0
    for i in range(0,tmp):
@@ -59,13 +60,43 @@ def asansör():
    for i in range(0,tmp):
       queue.item.pop(0)
 
+   def hedef(asansio):
+       i=0
+       while(len(asansio.customer)!=i):
+           if(asansio.destination > asansio.customer[i][1] or asansio.destination == 0):
+               asansio.destination = asansio.customer[i][1]
+           i += 1
+
+       time.sleep(0.2)
+       asansio.floor = asansio.destination
+       print("floor : %d time : %s" % (asansio.floor, time.ctime(time.time())))
+
+   def asansörHareket(asansio,f):
+
+       grupsayisi = len(asansio.customer)
+       a = 0
+       kgrup = []
+       kgrupsayisi = 0
+
+       if (asansio.floor == asansio.destination):
+           while (a != grupsayisi):
+               if (asansio.customer[a][1] == asansio.floor):
+                   f.enque(asansio.customer[a])
+                   kgrup.append(a)
+                   kgrupsayisi += 1
+               a += 1
+
+
+       for i in range(0, kgrupsayisi):
+           queue.item.remove(kgrup[i])
+
 
 class Asansor (object):
    def __init__(self):
       self.customer = []
       self.mode = "working"
       self.floor = 0
-      self.destination = 2
+      self.destination = 0
       self.direction = "up"
       self.capacity = 10
       self.count_inside = 0
@@ -147,6 +178,11 @@ class Queue(object):
 queue = Queue()
 queue2 = Queue()
 asansio1 = Asansor()
+f0 = Kat()
+f1 = Kat()
+f2 = Kat()
+f3 = Kat()
+f4 = Kat()
 counter = 5
 
 try:
@@ -166,5 +202,4 @@ print("somecode")
 threadgiris.join()
 print(queue.deque())
 
-
-asansör()
+asansörBinis(queue)
