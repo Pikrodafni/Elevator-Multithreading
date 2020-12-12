@@ -1,205 +1,192 @@
 import random
 import threading
 import time
-from collections import deque
 
 
 exitFlag = 0
-global counter
-global queue
-global asansio1,asansio2,asansio3,asansio4,asansio5
-global f0,f1,f2,f3,f4
+global asansio2, asansio3, asansio4, asansio5
+global f
+
 
 def girenSayisi():
-   insan = random.randint(1, 10)
+    insan = random.randint(1, 10)
+    return insan
 
-   return insan
 
 def cikanSayisi():
-   insan = random.randint(1, 5)
+    insan = random.randint(1, 5)
+    return insan
 
-   return insan
 
 def hedefKat():
-   kat = random.randint(1,4)
-   return kat
+    kat = random.randint(1, 4)
+    return kat
+
 
 def quekle(counter):
-   while counter:
-      kat = hedefKat()
-      ins = girenSayisi()
-      time.sleep(0.5)
-      print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
-      queue.enque([ins, kat])
-      counter -=1
+    while counter:
+        kat = hedefKat()
+        ins = girenSayisi()
+        time.sleep(0.5)
+        print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
+        queue.enque([ins, kat])
+        counter -= 1
+
 
 def qucikar(counter):
-   while counter:
-      kat = hedefKat()
-      ins = cikanSayisi()
-      time.sleep(1)
-      print("cikaninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
-      queue2.enque([ins, kat])
-      counter -=1
-
-def asansörBinis(queue):
-   tmp = queue.deque()
-   binecek = 0
-   for i in range(0,tmp):
-      print("evveti",i)
-      asansio1.customer.append(queue.item[i])
-      print("customa",asansio1.customer)
-      binecek += asansio1.customer[i][0]
-      print("aha:",binecek)
-
-   if(binecek < 10):
-      queue.item[tmp][0] -= (10 - binecek)
-      asansio1.customer.append([(10 - binecek),queue.item[tmp][1]])
-      print(asansio1.customer)
-
-   for i in range(0,tmp):
-      queue.item.pop(0)
-
-   def hedef(asansio):
-       i=0
-       while(len(asansio.customer)!=i):
-           if(asansio.destination > asansio.customer[i][1] or asansio.destination == 0):
-               asansio.destination = asansio.customer[i][1]
-           i += 1
-
-       time.sleep(0.2)
-       asansio.floor = asansio.destination
-       print("floor : %d time : %s" % (asansio.floor, time.ctime(time.time())))
-
-   def asansörHareket(asansio,f):
-
-       grupsayisi = len(asansio.customer)
-       a = 0
-       kgrup = []
-       kgrupsayisi = 0
-
-       if (asansio.floor == asansio.destination):
-           while (a != grupsayisi):
-               if (asansio.customer[a][1] == asansio.floor):
-                   f.enque(asansio.customer[a])
-                   kgrup.append(a)
-                   kgrupsayisi += 1
-               a += 1
+    while counter:
+        kat = hedefKat()
+        ins = cikanSayisi()
+        time.sleep(1)
+        print("cikaninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
+        queue2.enque([ins, kat])
+        counter -= 1
 
 
-       for i in range(0, kgrupsayisi):
-           queue.item.remove(kgrup[i])
+def asansorBinis(queue, asansio1):
+    tmp = queue.deque()
+    binecek = 0
+    for i in range(0, tmp):
+        print("evveti", i)
+        asansio1.customer.append(queue.item[i])
+        print("customa", asansio1.customer)
+        binecek += asansio1.customer[i][0]
+        print("aha:", binecek)
+
+    if (binecek < 10):
+        queue.item[tmp][0] -= (10 - binecek)
+        asansio1.customer.append([(10 - binecek), queue.item[tmp][1]])
+        print(asansio1.customer)
+
+    for i in range(0, tmp):
+        queue.item.pop(0)
 
 
-class Asansor (object):
-   def __init__(self):
-      self.customer = []
-      self.mode = "working"
-      self.floor = 0
-      self.destination = 0
-      self.direction = "up"
-      self.capacity = 10
-      self.count_inside = 0
-      self.inside = []
-      self.active = "Active"
+def asansorInis(asansio1, f):
+    print("merhaba")
+    hedef(asansio1)
+    grupsayisi = len(asansio1.customer)
+    a = 0
+    copyitem = asansio1.customer.copy()
+    if (asansio1.floor == asansio1.destination):
+        while (a != grupsayisi):
+            if (asansio1.customer[a][1] == asansio1.floor):
+                f[asansio1.floor] += asansio1.customer[a][0]
+                print(f[asansio1.floor])
+                copyitem.remove(asansio1.customer[a])
+            a += 1
+    asansio1.customer = copyitem.copy()
+    print("customerlar",asansio1.customer)
 
-class Kat(object):
+def hedef(asansio1):
+    i = 0
+    j = 1
+    temp = list()
+    for a in range(len(asansio1.customer)):
+        temp.append(asansio1.customer[a][1])
 
-   def __init__(self):
-      self.customer = []
+    print(min(temp))
+    asansio1.destination = min(temp)
+    if (asansio1.destination < asansio1.floor):
+        asansio1.direction = "down"
+    else:
+        asansio1.direction = "up"
 
-   def __repr__(self):
-      return "{}".format(self.customer)
+    while (asansio1.floor != asansio1.destination):
+        time.sleep(0.2)
+        asansio1.floor += 1
+        print("floor : %d time : %s" % (asansio1.floor, time.ctime(time.time())))
 
-   def __str__(self):
-      return "{}".format(self.customer)
+def asansor(asansio1):
+    asansorBinis(queue, asansio1)
+    hedef(asansio1)
+    asansorInis(asansio1, f)
 
-   def enque(self, add):
-      self.customer.append(add)
-      return True
+class Asansor(object):
+    def __init__(self, name):
+        self.name = name
+        self.customer = []
+        self.mode = "working"
+        self.floor = 0
+        self.destination = 0
+        self.direction = "up"
+        self.capacity = 10
+        self.count_inside = 0
+        self.inside = []
+        self.active = "Active"
 
-   def size(self):
-      return len(self.customer)
+    def __repr__(self):
+        return "{}".format(self.direction)
 
-   def isempty(self):
-      if self.size() == 0:
-         return True
-      else:
-         return False
-
-   def deque(self):
-      if self.size() == 0:
-         return None
-      else:
-         return self.customer.pop(0)
+    def __str__(self):
+        return "{}".format(self.direction)
 
 
 class Queue(object):
 
-   def __init__(self):
-      self.item = []
+    def __init__(self):
+        self.item = []
 
-   def __repr__(self):
-      return "{}".format(self.item)
+    def __repr__(self):
+        return "{}".format(self.item)
 
-   def __str__(self):
-      return "{}".format(self.item)
+    def __str__(self):
+        return "{}".format(self.item)
 
-   def enque(self, add):
-      self.item.append(add)
-      return True
+    def enque(self, add):
+        self.item.append(add)
+        return True
 
-   def size(self):
-      return len(self.item)
+    def size(self):
+        return len(self.item)
 
-   def isempty(self):
-      if self.size() == 0:
-         return True
-      else:
-         return False
+    def isempty(self):
+        if self.size() == 0:
+            return True
+        else:
+            return False
 
-   def deque(self):
-      binecek = 0
-      i = 0
-      temp = 0
-      if self.size() == 0:
-         return None
-      else:
-         for i in range(len(self.item)):
-            if ((binecek + temp) > 10):
-               break
-            binecek += self.item[i][0]
-            i += 1
-            temp = self.item[i][0]
+    def deque(self):
+        binecek = 0
+        i = 0
+        temp = 0
+        if self.size() == 0:
+            return None
+        else:
+            for i in range(len(self.item)):
+                if ((binecek + temp) > 10):
+                    break
+                binecek += self.item[i][0]
+                i += 1
+                temp = self.item[i][0]
 
-         return i
+            return i
 
-
+f=[0,0,0,0,0]
 queue = Queue()
 queue2 = Queue()
-asansio1 = Asansor()
-f0 = Kat()
-f1 = Kat()
-f2 = Kat()
-f3 = Kat()
-f4 = Kat()
+asansio1 = Asansor("birinci asansör")
 counter = 5
 
 try:
-   threadgiris = threading.Thread(target=quekle, args=(counter, ))
+    threadgiris = threading.Thread(target=quekle, args=(counter,))
 except:
-   print("Error: unable to start thread")
+    print("Error: unable to start thread")
 
 try:
-   threadcikis = threading.Thread(target=qucikar, args=(counter,))
+    threadcikis = threading.Thread(target=qucikar, args=(counter,))
 except:
-   print("Error: unable to start thread")
+    print("Error: unable to start thread")
+
+try:
+    threadAsansor = threading.Thread(target=asansor, args=(asansio1,))
+except:
+    print("Error: unable to start thread")
 
 threadgiris.start()
 threadcikis.start()
 print("somecode")
 
-threadgiris.join()
-print(queue.deque())
-
-asansörBinis(queue)
+threadcikis.join()
+threadAsansor.start()
+threadAsansor.join()
