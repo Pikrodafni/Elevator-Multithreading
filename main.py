@@ -17,7 +17,10 @@ def girenSayisi():
 def hedefKat():
     kat = random.randint(1, 4)
     return kat
-
+def prints(cikiskati,insan):
+    liste = list()
+    liste.append([insan,cikiskati])
+    print("cikis yapan insansayisi,kat :",liste)
 def cikanSayisicikis(f):
     cikiskati = hedefKatcikis(f)
     if(f[cikiskati]>=5):
@@ -25,6 +28,7 @@ def cikanSayisicikis(f):
     elif(f[cikiskati]<5):
         insan = random.randint(1,f[cikiskati])
     f[cikiskati] -= insan
+    prints(cikiskati,insan)
     cikisYapan = [[insan,0]]
     return cikisYapan
 
