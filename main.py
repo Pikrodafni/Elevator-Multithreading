@@ -2,12 +2,6 @@ import random
 import threading
 import time
 
-
-exitFlag = 0
-global asansio2, asansio3, asansio4, asansio5
-global f
-
-f= list()
 f=[0,0,0,0,0]
 
 def girenSayisi():
@@ -91,22 +85,36 @@ def asansorInis(asansio1, f):
     print("customerlar",asansio1.customer)
 
 def hedef(asansio1):
-    i = 0
-    j = 1
-    temp = list()
-    for a in range(len(asansio1.customer)):
-        temp.append(asansio1.customer[a][1])
 
-    print(min(temp))
-    asansio1.destination = min(temp)
+    if(bool(asansio1.customer)==True):
+        temp = list()
+        for a in range(len(asansio1.customer)):
+            temp.append(asansio1.customer[a][1])
+        print(min(temp))
+        asansio1.destination = min(temp)
+    elif(bool(asansio1.customer)==False):
+        temp = list()
+        cnt = 0
+        newDestination = None
+        for i in range(5):
+            if(bool(f[i])==True):
+                temp.append(i)
+                cnt += 1
+                if(abs(asansio1.floor - temp[cnt])<newDestination)
+                abs(asansio1.floor - temp[cnt])
+
+
     if (asansio1.destination < asansio1.floor):
         asansio1.direction = "down"
     else:
         asansio1.direction = "up"
-
     while (asansio1.floor != asansio1.destination):
         time.sleep(0.2)
-        asansio1.floor += 1
+        if(asansio1.direction == "up"):
+            asansio1.floor += 1
+        elif(asansio1.direction == "down"):
+            asansio1.floor -= 1
+
         print("floor : %d time : %s" % (asansio1.floor, time.ctime(time.time())))
 
 def asansor(asansio1, queue, f):
@@ -117,7 +125,6 @@ def asansor(asansio1, queue, f):
         asansorInis(asansio1, f)
         if not asansio1.customer:
             isEmpty = True
-
 
 class Asansor(object):
     def __init__(self, name):
@@ -131,11 +138,6 @@ class Asansor(object):
         self.count_inside = 0
         self.inside = []
         self.active = "Active"
-    def __repr__(self):
-        return "{}".format(self.direction)
-
-    def __str__(self):
-        return "{}".format(self.direction)
 
 class Queue(object):
 
