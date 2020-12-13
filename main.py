@@ -34,7 +34,7 @@ def cikanSayisicikis(f):
         insan = random.randint(1,f[cikiskati])
     f[cikiskati] -= insan
     prints(cikiskati,insan)
-    cikisYapan = [insan,cikiskati]
+    cikisYapan = [insan,0]
     return cikisYapan
 
 def quekle(counter):
@@ -60,7 +60,7 @@ def qucikar(f):
         elif(ins[1] == 4):
             queue4.enque(ins)
 
-def kuyruk(queue1,queue2,queue3,queue4):
+#def kuyruk(queue1,queue2,queue3,queue4):
 
 
 
@@ -107,14 +107,19 @@ def hedef(asansio1):
         print(min(temp))
         asansio1.destination = min(temp)
     elif(bool(asansio1.customer)==False):
-        temp = list()
-        cnt = 0
-        for i in range(5):
-            if(bool(f[i])==True):
-                temp.append(i)
-                cnt += 1
-                if(abs(asansio1.floor - temp[cnt])<asansio1.destination):
-                    asansio1.destination = temp[cnt]
+        destinationLength = None
+        if (bool(queue1) == True):
+            destinationLength = abs(asansio1.floor-1)
+            asansio1.destination = 1
+        if(bool(queue2) == True and destinationLength > abs(asansio1.floor-2)):
+            destinationLength = abs(asansio1.floor-2)
+            asansio1.destination = 2
+        if (bool(queue3) == True and destinationLength > abs(asansio1.floor - 3)):
+            destinationLength = abs(asansio1.floor - 3)
+            asansio1.destination = 3
+        if (bool(queue4) == True and destinationLength > abs(asansio1.floor - 4)):
+            destinationLength = abs(asansio1.floor - 4)
+            asansio1.destination = 4
 
     if (asansio1.destination < asansio1.floor):
         asansio1.direction = "down"
@@ -125,8 +130,16 @@ def hedef(asansio1):
         if(asansio1.direction == "up"):
             asansio1.floor += 1
         elif(asansio1.direction == "down"):
-            if(bool[f[asansio1.floor]] == True and countinside(asansio1)<10):
-
+            if(asansio1.customer[0][1]==0):
+                if(bool(queue1) and asansio1.floor==1):
+                    asansio1.destination
+                    break
+                if(bool(queue2) and asansio1.floor==2):
+                    break
+                if(bool(queue3) and asansio1.floor==3):
+                    break
+                if(bool(queue4) and asansio1.floor==4):
+                    break
             asansio1.floor -= 1
 
         print("floor : %d time : %s" % (asansio1.floor, time.ctime(time.time())))
