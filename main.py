@@ -7,21 +7,34 @@ exitFlag = 0
 global asansio2, asansio3, asansio4, asansio5
 global f
 
+f= list()
+f=[0,0,0,0,0]
 
 def girenSayisi():
     insan = random.randint(1, 10)
     return insan
 
-
-def cikanSayisi():
-    insan = random.randint(1, 5)
-    return insan
-
-
 def hedefKat():
     kat = random.randint(1, 4)
     return kat
 
+def cikanSayisicikis(f):
+    cikiskati = hedefKatcikis(f)
+    if(f[cikiskati]>=5):
+        insan = random.randint(1, 5)
+    elif(f[cikiskati]<5):
+        insan = random.randint(1,f[cikiskati])
+    f[cikiskati] -= insan
+    cikisYapan = [[insan,0]]
+    return cikisYapan
+
+def hedefKatcikis(f):
+    cikisKati = list()
+    for a in range(len(f)):
+        if(f[a]>0):
+            cikisKati.append(a)
+    kat = random.choice(cikisKati)
+    return kat
 
 def quekle(counter):
     while counter:
@@ -32,16 +45,12 @@ def quekle(counter):
         queue.enque([ins, kat])
         counter -= 1
 
-
-def qucikar(counter):
-    while counter:
-        kat = hedefKat()
-        ins = cikanSayisi()
+def qucikar(f):
+        ins = list()
+        ins = cikanSayisicikis(f)
         time.sleep(1)
-        print("cikaninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
-        queue2.enque([ins, kat])
-        counter -= 1
-
+        print("cikaninsan : %s time : %s" % (ins, time.ctime(time.time())))
+        queue2.enque(ins)
 
 def asansorBinis(queue, asansio1):
     tmp = queue.deque()
@@ -60,7 +69,6 @@ def asansorBinis(queue, asansio1):
 
     for i in range(0, tmp):
         queue.item.pop(0)
-
 
 def asansorInis(asansio1, f):
     print("merhaba")
@@ -97,10 +105,15 @@ def hedef(asansio1):
         asansio1.floor += 1
         print("floor : %d time : %s" % (asansio1.floor, time.ctime(time.time())))
 
-def asansor(asansio1):
+def asansor(asansio1, queue, f):
+    isEmpty = False
     asansorBinis(queue, asansio1)
-    hedef(asansio1)
-    asansorInis(asansio1, f)
+    while(isEmpty==False):
+        hedef(asansio1)
+        asansorInis(asansio1, f)
+        if not asansio1.customer:
+            isEmpty = True
+
 
 class Asansor(object):
     def __init__(self, name):
@@ -114,13 +127,11 @@ class Asansor(object):
         self.count_inside = 0
         self.inside = []
         self.active = "Active"
-
     def __repr__(self):
         return "{}".format(self.direction)
 
     def __str__(self):
         return "{}".format(self.direction)
-
 
 class Queue(object):
 
@@ -162,7 +173,7 @@ class Queue(object):
 
             return i
 
-f=[0,0,0,0,0]
+
 queue = Queue()
 queue2 = Queue()
 asansio1 = Asansor("birinci asansör")
@@ -174,19 +185,19 @@ except:
     print("Error: unable to start thread")
 
 try:
-    threadcikis = threading.Thread(target=qucikar, args=(counter,))
+    threadcikis = threading.Thread(target=qucikar, args=(f,))
 except:
     print("Error: unable to start thread")
 
 try:
-    threadAsansor = threading.Thread(target=asansor, args=(asansio1,))
+    threadAsansor = threading.Thread(target=asansor, args=(asansio1, queue, f,))
 except:
     print("Error: unable to start thread")
 
 threadgiris.start()
-threadcikis.start()
+threadgiris.join()
 print("somecode")
-
-threadcikis.join()
 threadAsansor.start()
 threadAsansor.join()
+threadcikis.start()
+threadcikis.join()
