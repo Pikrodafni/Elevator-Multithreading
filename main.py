@@ -11,20 +11,12 @@ def girenSayisi():
 def hedefKat():
     kat = random.randint(1, 4)
     return kat
+
 def prints(cikiskati,insan):
     liste = list()
     liste.append([insan,cikiskati])
     print("cikis yapan insansayisi,kat :",liste)
-def cikanSayisicikis(f):
-    cikiskati = hedefKatcikis(f)
-    if(f[cikiskati]>=5):
-        insan = random.randint(1, 5)
-    elif(f[cikiskati]<5):
-        insan = random.randint(1,f[cikiskati])
-    f[cikiskati] -= insan
-    prints(cikiskati,insan)
-    cikisYapan = [[insan,0]]
-    return cikisYapan
+    return liste
 
 def hedefKatcikis(f):
     cikisKati = list()
@@ -33,6 +25,17 @@ def hedefKatcikis(f):
             cikisKati.append(a)
     kat = random.choice(cikisKati)
     return kat
+
+def cikanSayisicikis(f):
+    cikiskati = hedefKatcikis(f)
+    if(f[cikiskati]>=5):
+        insan = random.randint(1, 5)
+    elif(f[cikiskati]<5):
+        insan = random.randint(1,f[cikiskati])
+    f[cikiskati] -= insan
+    prints(cikiskati,insan)
+    cikisYapan = [insan,cikiskati]
+    return cikisYapan
 
 def quekle(counter):
     while counter:
@@ -48,7 +51,18 @@ def qucikar(f):
         ins = cikanSayisicikis(f)
         time.sleep(1)
         print("cikaninsan : %s time : %s" % (ins, time.ctime(time.time())))
-        queue2.enque(ins)
+        if(ins[1]==1):
+            queue1.enque(ins)
+        elif(ins[1]==2):
+            queue2.enque(ins)
+        elif(ins[1]==3):
+            queue3.enque(ins)
+        elif(ins[1] == 4):
+            queue4.enque(ins)
+
+def kuyruk(queue1,queue2,queue3,queue4):
+
+
 
 def asansorBinis(queue, asansio1):
     tmp = queue.deque()
@@ -95,14 +109,12 @@ def hedef(asansio1):
     elif(bool(asansio1.customer)==False):
         temp = list()
         cnt = 0
-        newDestination = None
         for i in range(5):
             if(bool(f[i])==True):
                 temp.append(i)
                 cnt += 1
-                if(abs(asansio1.floor - temp[cnt])<newDestination)
-                abs(asansio1.floor - temp[cnt])
-
+                if(abs(asansio1.floor - temp[cnt])<asansio1.destination):
+                    asansio1.destination = temp[cnt]
 
     if (asansio1.destination < asansio1.floor):
         asansio1.direction = "down"
@@ -113,9 +125,20 @@ def hedef(asansio1):
         if(asansio1.direction == "up"):
             asansio1.floor += 1
         elif(asansio1.direction == "down"):
+            if(bool[f[asansio1.floor]] == True and countinside(asansio1)<10):
+
             asansio1.floor -= 1
 
         print("floor : %d time : %s" % (asansio1.floor, time.ctime(time.time())))
+
+def countinside(asansio1):
+
+    totalinside=0
+    for i in range(len(asansio1.customer)):
+        totalinside += asansio1.customer[i][0]
+
+    return totalinside
+
 
 def asansor(asansio1, queue, f):
     isEmpty = False
@@ -181,7 +204,10 @@ class Queue(object):
 
 
 queue = Queue()
+queue1 = Queue()
 queue2 = Queue()
+queue3 = Queue()
+queue4 = Queue()
 asansio1 = Asansor("birinci asansör")
 counter = 5
 
