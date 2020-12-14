@@ -150,8 +150,8 @@ def countinside(asansio):
         totalinside += asansio.customer[i][0]
     return totalinside
 
-def asansor(asansio, devam, f):
-    while (devam == True):
+def asansor(asansio, devam, devam1, f):
+    while (devam == True and devam1 != True ):
         isEmpty = True
         if (asansio.floor == 0 and bool(queue.item) == True):
             asansorBinis(queue, asansio)
@@ -172,75 +172,107 @@ def asansor(asansio, devam, f):
                 isEmpty = True
         hedef(asansio)
 
+
+    while(devam1 == True):
+        isEmpty = True
+        if (asansio.floor == 0 and bool(queue.item) == True):
+            asansorBinis(queue, asansio)
+        if (asansio.floor == 1 and bool(queue1.item) == True):
+            asansorBinis(queue1, asansio)
+        if (asansio.floor == 2 and bool(queue2.item) == True):
+            asansorBinis(queue2, asansio)
+        if (asansio.floor == 3 and bool(queue3.item) == True):
+            asansorBinis(queue3, asansio)
+        if (asansio.floor == 4 and bool(queue4.item) == True):
+            asansorBinis(queue4, asansio)
+        if (bool(asansio.customer) == True):
+            isEmpty = False
+        while (isEmpty == False):
+            hedef(asansio)
+            asansorInis(asansio, f)
+            if not asansio.customer:
+                isEmpty = True
+
+        hedef(asansio)
+        bekleyen = kuyruk()
+        if (bekleyen <= 20 and bool(asansio2.customer) == False):
+            devam1 = False
+
+        if (bekleyen <= 30 and bool(asansio3.customer) == False):
+            devam1 = False
+
+        elif (bekleyen <= 40 and bool(asansio4.customer) == False):
+            devam1 = False
+
+        elif (bekleyen < 50 and bool(asansio5.customer) == False):
+            devam1 = False
+
+
 def kuyruk():
     toplamKuyruktakiler = 0
-    i=0
-    while(bool(queue.item[i][0])==True):
-        toplamKuyruktakiler += queue.item[i][0]
-        i += 1
+    qcopy = queue.item.copy()
+    qcopy1 = queue1.item.copy()
+    qcopy2 = queue2.item.copy()
+    qcopy3 = queue3.item.copy()
+    qcopy4 = queue4.item.copy()
 
-    i=0
-    while(bool(queue1.item[i][0])==True):
-        toplamKuyruktakiler += queue1.item[i][0]
-        i+=1
+    while (bool(qcopy)==True):
+        toplamKuyruktakiler += qcopy[0][0]
+        qcopy.pop(0)
 
-    i=0
-    while(bool(queue2.item[i][0])==True):
-        toplamKuyruktakiler += queue2.item[i][0]
-        i+=1
 
-    i=0
-    while(bool(queue3.item[i][0])==True):
-        toplamKuyruktakiler += queue3.item[i][0]
-        i+=1
+    while (bool(qcopy1)==True):
+        toplamKuyruktakiler += qcopy1[0][0]
+        qcopy1.pop(0)
 
-    i = 0
-    while (bool(queue4.item[i][0]) == True):
-        toplamKuyruktakiler += queue4.item[i][0]
-        i+=1
+    while (bool(qcopy2)==True):
+        toplamKuyruktakiler += qcopy2[0][0]
+        qcopy2.pop(0)
+
+    while (bool(qcopy3)==True):
+        toplamKuyruktakiler += qcopy3[0][0]
+        qcopy3.pop(0)
+
+    while (bool(qcopy4)==True):
+        toplamKuyruktakiler += qcopy4[0][0]
+        qcopy4.pop(0)
 
     return toplamKuyruktakiler
 
 def kontrol(f):
     var = 1
+    deva = False
     while(var == 1):
+        print("KONTRA")
         bekleyen = kuyruk()
         if (bekleyen > 20):
             devam2 = True
             if(devam2==True):
                 print("Asansör2 Çalışıyor!!!")
 
-            asansor(asansio2, devam2, f)
-        elif (bekleyen <= 20 and bool(asansio2.customer) == False):
-            devam2 = False
-            asansor(asansio2, devam2, f)
+            asansor(asansio2, deva, devam2, f)
+
         if (bekleyen > 30):
             devam3 = True
             if (devam3 == True):
                 print("Asansör3 Çalışıyor!!!")
 
-            asansor(asansio3, devam3, f)
-        elif (bekleyen <= 30 and bool(asansio3.customer) == False):
-            devam3 = False
-            asansor(asansio3, devam3, f)
+            asansor(asansio3, deva, devam3, f)
+
         if (bekleyen > 40):
             devam4 = True
             if (devam4 == True):
                 print("Asansör4 Çalışıyor!!!")
 
-            asansor(asansio4, devam4, f)
-        elif (bekleyen <= 40 and bool(asansio4.customer) == False):
-            devam4 = False
-            asansor(asansio4, devam4, f)
+            asansor(asansio4, deva, devam4, f)
+
         if (bekleyen > 50):
             devam5 = True
             if (devam5 == True):
                 print("Asansör5 Çalışıyor!!!")
 
-            asansor(asansio5, devam5, f)
-        elif (bekleyen < 50 and bool(asansio5.customer) == False):
-            devam5 = False
-            asansor(asansio5, devam5, f)
+            asansor(asansio5, deva, devam5, f)
+
 
 
 class Asansor(object):
@@ -290,7 +322,8 @@ asansio2 = Asansor("ikinci asansör")
 asansio3 = Asansor("ikinci asansör")
 asansio4 = Asansor("ikinci asansör")
 asansio5 = Asansor("ikinci asansör")
-devam1 = True
+dev1 = False
+dev = True
 
 try:
     threadgiris = threading.Thread(target=quekle, args=())
@@ -303,7 +336,7 @@ except:
     print("Error: unable to start thread")
 
 try:
-    threadAsansor = threading.Thread(target=asansor, args=(asansio1, devam1, f,))
+    threadAsansor = threading.Thread(target=asansor, args=(asansio1, dev, dev1, f,))
 except:
     print("Error: unable to start thread")
 
