@@ -27,8 +27,6 @@ def hedefKatcikis(f):
     kat = random.choice(cikisKati)
     return kat
 
-
-
 def cikanSayisicikis(f):
     cikiskati = hedefKatcikis(f)
     if (f[cikiskati] >= 5):
@@ -40,22 +38,21 @@ def cikanSayisicikis(f):
     cikisYapan = [insan, 0]
     return cikisYapan
 
-def quekle(counter):
+def quekle():
     while True:
         kat = hedefKat()
         ins = girenSayisi()
         time.sleep(0.5)
         print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
         queue.enque([ins, kat])
-        print("queue : ",queue)
-        counter -= 1
+        print("Queue : ",queue.item)
 
 def qucikar(f):
         while True:
             if(f[1]>0 or f[2]>0 or f[3]>0 or f[4]>0):
                 ins = cikanSayisicikis(f)
                 time.sleep(1)
-                print("cikaninsan : %s time : %s" % (ins, time.ctime(time.time())))
+                print("kattan cikaninsan : %s time : %s" % (ins, time.ctime(time.time())))
                 if (ins[1] == 1):
                     queue1.enque(ins)
                 elif (ins[1] == 2):
@@ -66,26 +63,23 @@ def qucikar(f):
                     queue4.enque(ins)
                 print(f)
 
-
 #def kuyruk(queue1,queue2,queue3,queue4):
 
 def asansorBinis(queue, asansio1):
-    tmp = queue.deque()
-    print("temp: ",tmp)
-    binecek = 0
-    for i in range(0, tmp):
-        asansio1.customer.append(queue.item[i])
-        print("customa", asansio1.customer)
-        binecek += asansio1.customer[i][0]
-        print("aha:", binecek)
-
-    if (binecek < 10):
-        queue.item[tmp][0] -= (10 - binecek)
-        asansio1.customer.append([(10 - binecek), queue.item[tmp][1]])
-        print(asansio1.customer)
-
-    for i in range(0, tmp):
-        queue.item.pop(0)
+    var=1
+    countinsid = countinside(asansio1)
+    while(countinsid<10):
+        countinsid = countinside(asansio1)
+        if (bool(queue.item)==True and countinsid<10):
+            futureinside = countinsid + queue.item[0][0]
+            binecek = 10-countinsid
+            if (futureinside <= 10):
+                asansio1.customer.append(queue.item[0])
+                queue.item.pop(0)
+            elif (futureinside > 10):
+                queue.item[0][0] -= binecek
+                asansio1.customer.append([binecek, queue.item[0][1]])
+    print("asansördekiler : ",asansio1.customer)
 
 def asansorInis(asansio1, f):
     hedef(asansio1)
@@ -100,7 +94,7 @@ def asansorInis(asansio1, f):
                 copyitem.remove(asansio1.customer[a])
             a += 1
     asansio1.customer = copyitem.copy()
-    print("customerlar",asansio1.customer)
+    print("f.kat : %s All : %s" % (f,f[asansio1.floor]))
 
 def hedef(asansio1):
 
@@ -127,7 +121,6 @@ def hedef(asansio1):
         if (bool(queue4) == True and destinationLength > abs(asansio1.floor - 4)):
             destinationLength = abs(asansio1.floor - 4)
             asansio1.destination = 4
-
 
     if (asansio1.destination < asansio1.floor):
         asansio1.direction = "down"
@@ -158,18 +151,13 @@ def hedef(asansio1):
         print("floor : %d asansördekiler : %s time : %s" % (asansio1.floor, asansio1.customer, time.ctime(time.time())))
 
 def countinside(asansio1):
-
     totalinside=0
     for i in range(len(asansio1.customer)):
         totalinside += asansio1.customer[i][0]
-
     return totalinside
 
-
 def asansor(asansio1, queue, f):
-    i=0
-    time.sleep(1)
-    while (i!=5):
+    while (True):
         isEmpty = True
         if (asansio1.floor == 0 and bool(queue) == True):
             asansorBinis(queue, asansio1)
@@ -189,7 +177,6 @@ def asansor(asansio1, queue, f):
             if not asansio1.customer:
                 isEmpty = True
         hedef(asansio1)
-        i += 1
 
 
 class Asansor(object):
@@ -229,36 +216,19 @@ class Queue(object):
         else:
             return False
 
-    def deque(self):
-        binecek = 0
-        i = 0
-        temp = 0
-        if self.size() == 0:
-            return None
-        else:
-            for i in range(len(self.item)):
-                if ((binecek + temp) > 10):
-                    break
-                binecek += self.item[i][0]
-                i += 1
-                if(i!= len(self.item)):
-                    temp = self.item[i][0]
-
-            return i-1
-
-
-
-
 queue = Queue()
 queue1 = Queue()
 queue2 = Queue()
 queue3 = Queue()
 queue4 = Queue()
 asansio1 = Asansor("birinci asansör")
-counter = 5
+asansio2 = Asansor("ikinci asansör")
+asansio3 = Asansor("ikinci asansör")
+asansio4 = Asansor("ikinci asansör")
+asansio5 = Asansor("ikinci asansör")
 
 try:
-    threadgiris = threading.Thread(target=quekle, args=(counter,))
+    threadgiris = threading.Thread(target=quekle, args=())
 except:
     print("Error: unable to start thread")
 
