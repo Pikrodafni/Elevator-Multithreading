@@ -12,11 +12,51 @@ def hedefKat():
     kat = random.randint(1, 4)
     return kat
 
-def prints(cikiskati,insan):
+def prints(cikiskati,insan,):
     liste = list()
     liste.append([insan,cikiskati])
-    print("cikis yapan insansayisi,kat :",liste)
+    #print("cikis yapan insansayisi,kat :",liste)
+    cikantop.cikan+=insan
     return liste
+
+def kuyruksay(kuyruk):
+
+    kuyrukinsan = 0
+    qcopy = kuyruk.item.copy()
+
+    while (bool(qcopy)==True):
+        kuyrukinsan += qcopy[0][0]
+        qcopy.pop(0)
+    return kuyrukinsan
+
+def yazdir():
+    print(0, ". floor   queue:", kuyruksay(queue))
+    print(1, ". floor  all:", f[1], " queue:", kuyruksay(queue1))
+    print(2, ". floor  all:", f[2], " queue:", kuyruksay(queue2))
+    print(3, ". floor  all:", f[3], " queue:", kuyruksay(queue3))
+    print(4, ". floor  all:", f[4], " queue:", kuyruksay(queue4))
+    print("exitcount:",cikantop.cikan)
+    print("Asansör1:")
+    asansoryazdir(asansio1)
+    print("Asansör2:")
+    asansoryazdir(asansio2)
+    print("Asansör3:")
+    asansoryazdir(asansio3)
+    print("Asansör4:")
+    asansoryazdir(asansio4)
+    print("Asansör5:")
+    asansoryazdir(asansio5)
+
+def asansoryazdir(asansor):
+    print("aktiflik", asansor.active)
+    print("mode", asansor.mode)
+    print("floor", asansor.floor)
+    print("destination", asansor.destination)
+    print("capacity", asansor.capacity)
+    print("count inside", countinside(asansor))
+    print("inside:", asansor.customer)
+    print("")
+
 
 def hedefKatcikis(f):
     cikisKati = list()
@@ -38,21 +78,27 @@ def cikanSayisicikis(f):
     cikisYapan = [insan, 0]
     return cikisYapan
 
+class topcikan(object):
+
+    def __init__(self):
+        self.cikan = 0
+
+cikantop=topcikan()
+
 def quekle():
     while True:
         kat = hedefKat()
         ins = girenSayisi()
         time.sleep(0.5)
-        print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
+        #print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
         queue.enque([ins, kat])
-        print("Queue : ",queue.item)
+        #print("Queue : ",queue.item)
 
 def qucikar(f):
         while True:
             if(f[1]>0 or f[2]>0 or f[3]>0 or f[4]>0):
                 ins = cikanSayisicikis(f)
                 time.sleep(1)
-                print("kattan cikaninsan : %s time : %s" % (ins, time.ctime(time.time())))
                 if (ins[1] == 1):
                     queue1.enque(ins)
                 elif (ins[1] == 2):
@@ -61,8 +107,6 @@ def qucikar(f):
                     queue3.enque(ins)
                 elif (ins[1] == 4):
                     queue4.enque(ins)
-                print(f)
-
 
 def asansorBinis(queue, asansio1):
     countinsid = countinside(asansio1)
@@ -77,7 +121,7 @@ def asansorBinis(queue, asansio1):
             elif (futureinside > 10):
                 queue.item[0][0] -= binecek
                 asansio1.customer.append([binecek, queue.item[0][1]])
-    print("asansördekiler : ",asansio1.customer)
+    #print("asansördekiler : ",asansio1.customer)
 
 def asansorInis(asansio1, f):
     hedef(asansio1)
@@ -88,11 +132,12 @@ def asansorInis(asansio1, f):
         while (a != grupsayisi):
             if (asansio1.customer[a][1] == asansio1.floor):
                 f[asansio1.floor] += asansio1.customer[a][0]
-                print(f[asansio1.floor])
                 copyitem.remove(asansio1.customer[a])
             a += 1
     asansio1.customer = copyitem.copy()
-    print("f.kat : %s All : %s" % (f,f[asansio1.floor]))
+    yazdir()
+
+
 
 def hedef(asansio):
 
@@ -100,7 +145,6 @@ def hedef(asansio):
         temp = list()
         for a in range(len(asansio.customer)):
             temp.append(asansio.customer[a][1])
-        print(min(temp))
         asansio.destination = min(temp)
     elif (bool(asansio.customer) == False):
         destinationLength = 5
@@ -125,6 +169,7 @@ def hedef(asansio):
     else:
         asansio.direction = "up"
     while (asansio.floor != asansio.destination):
+
         time.sleep(0.2)
         if(asansio.direction == "up"):
             asansio.floor += 1
@@ -142,7 +187,7 @@ def hedef(asansio):
 
             asansio.floor -= 1
 
-        print("floor : %d asansördekiler : %s time : %s" % (asansio.floor, asansio.customer, time.ctime(time.time())))
+        #print("floor : %d asansördekiler : %s time : %s" % (asansio.floor, asansio.customer, time.ctime(time.time())))
 
 def countinside(asansio):
     totalinside=0
@@ -196,15 +241,23 @@ def asansor(asansio, devam, devam1, f):
         hedef(asansio)
         bekleyen = kuyruk()
         if (bekleyen <= 20 and bool(asansio2.customer) == False):
+            asansio2.active = "False"
+            asansio2.mode = "Idle"
             devam1 = False
 
         if (bekleyen <= 30 and bool(asansio3.customer) == False):
+            asansio3.active = "False"
+            asansio3.mode = "Idle"
             devam1 = False
 
         elif (bekleyen <= 40 and bool(asansio4.customer) == False):
+            asansio4.active = "False"
+            asansio4.mode = "Idle"
             devam1 = False
 
         elif (bekleyen < 50 and bool(asansio5.customer) == False):
+            asansio5.active = "False"
+            asansio5.mode = "Idle"
             devam1 = False
 
 
@@ -248,6 +301,8 @@ def kontrol(f):
             devam2 = True
             if(devam2==True):
                 print("Asansör2 Çalışıyor!!!")
+                asansio2.active="True"
+                asansio2.mode="Working"
 
             asansor(asansio2, deva, devam2, f)
 
@@ -255,6 +310,8 @@ def kontrol(f):
             devam3 = True
             if (devam3 == True):
                 print("Asansör3 Çalışıyor!!!")
+                asansio3.active = "True"
+                asansio3.mode = "Working"
 
             asansor(asansio3, deva, devam3, f)
 
@@ -262,6 +319,8 @@ def kontrol(f):
             devam4 = True
             if (devam4 == True):
                 print("Asansör4 Çalışıyor!!!")
+                asansio4.active = "True"
+                asansio4.mode = "Working"
 
             asansor(asansio4, deva, devam4, f)
 
@@ -269,6 +328,8 @@ def kontrol(f):
             devam5 = True
             if (devam5 == True):
                 print("Asansör5 Çalışıyor!!!")
+                asansio5.active = "True"
+                asansio5.mode = "Working"
 
             asansor(asansio5, deva, devam5, f)
 
@@ -285,7 +346,9 @@ class Asansor(object):
         self.capacity = 10
         self.count_inside = 0
         self.inside = []
-        self.active = "Active"
+        self.active = "False"
+
+
 
 class Queue(object):
 
@@ -316,11 +379,15 @@ queue1 = Queue()
 queue2 = Queue()
 queue3 = Queue()
 queue4 = Queue()
+
 asansio1 = Asansor("birinci asansör")
 asansio2 = Asansor("ikinci asansör")
 asansio3 = Asansor("ikinci asansör")
 asansio4 = Asansor("ikinci asansör")
 asansio5 = Asansor("ikinci asansör")
+asansio1.active="True"
+asansio1.mode="Working"
+
 dev1 = False
 dev = True
 
