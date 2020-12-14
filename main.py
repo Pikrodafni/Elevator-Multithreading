@@ -243,7 +243,6 @@ def kontrol(f):
     var = 1
     deva = False
     while(var == 1):
-        print("KONTRA")
         bekleyen = kuyruk()
         if (bekleyen > 20):
             devam2 = True
