@@ -1,11 +1,6 @@
 import random
 import threading
 import time
-import tkinter as tk
-
-pencere = tk.Tk()
-pencere.title("Asansör Durumu")
-pencere.geometry("1024x640+100+50")
 
 f=[0,0,0,0,0]
 
@@ -91,8 +86,6 @@ class topcikan(object):
 cikantop=topcikan()
 
 def quekle():
-    frame = tk.Frame(pencere, bg="navyblue")
-    frame.place(relwidth=1, relheight=1)
     while True:
         kat = hedefKat()
         ins = girenSayisi()
@@ -100,9 +93,6 @@ def quekle():
         #print("gireninsan : %s kat :%s time : %s" % (ins, kat, time.ctime(time.time())))
         queue.enque([ins, kat])
         #print("Queue : ",queue.item)
-        str = kuyruksay(queue)
-        label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-        label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
 
 def qucikar(f):
         while True:
@@ -207,48 +197,27 @@ def countinside(asansio):
     return totalinside
 
 def asansor(asansio, devam, devam1, f):
-
-    frame = tk.Frame(pencere, bg="navyblue")
-    frame.place(relwidth=1, relheight=1)
     while (devam == True and devam1 != True ):
         isEmpty = True
         if (asansio.floor == 0 and bool(queue.item) == True):
             asansorBinis(queue, asansio)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
         if (asansio.floor == 1 and bool(queue1.item) == True):
             asansorBinis(queue1, asansio)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
         if (asansio.floor == 2 and bool(queue2.item) == True):
             asansorBinis(queue2, asansio)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
         if (asansio.floor == 3 and bool(queue3.item) == True):
             asansorBinis(queue3, asansio)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
         if (asansio.floor == 4 and bool(queue4.item) == True):
             asansorBinis(queue4, asansio)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
         if (bool(asansio.customer) == True):
             isEmpty = False
         while (isEmpty == False):
             hedef(asansio)
             asansorInis(asansio, f)
-            str = kuyruksay(queue)
-            label11 = tk.Label(frame, text=str, fg='white', bg='#192633')
-            label11.place(relx=0.03, rely=0.18, relwidth=0.30, relheight=0.24)
             if not asansio.customer:
                 isEmpty = True
         hedef(asansio)
-    frame.pack()
+
 
     while(devam1 == True):
         isEmpty = True
@@ -448,13 +417,3 @@ threadgiris.start()
 threadAsansor.start()
 threadcikis.start()
 threadKontrol.start()
-
-#Tasarım
-canvas = tk.Canvas(pencere, height=500 , width =500)
-frame = tk.Frame(pencere , bg="black")
-frame.place(relwidth=1,relheight=1)
-label11=tk.Label(frame,text=str,fg='white',bg='#192633')
-label11.place(relx=0.03,rely=0.18,relwidth=0.30,relheight=0.24)
-pencere.title("Asansör Durumu")
-pencere.geometry("1024x640+100+50")
-pencere.mainloop()
