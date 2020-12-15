@@ -4,19 +4,12 @@ import time
 import tkinter as tk
 
 root =tk.Tk()
-root.geometry("1024x640+100+50")
+canvas = tk.Canvas(root,width=1024,height=600)
 frame = tk.Frame(root, bg='darkgray')
-frame.place(relwidth=1, relheight=1)
-frame1 = tk.Frame(root, bg='darkgray')
-frame1.place(relwidth=1, relheight=1)
-frame2 = tk.Frame(root, bg='darkgray')
-frame2.place(relwidth=1, relheight=1)
-frame3 = tk.Frame(root, bg='darkgray')
-frame3.place(relwidth=1, relheight=1)
-frame4 = tk.Frame(root, bg='darkgray')
-frame4.place(relwidth=1, relheight=1)
-frame5 = tk.Frame(root, bg='darkgray')
-frame5.place(relwidth=1, relheight=1)
+frame.place(relwidth=1.0,relheight=1.0)
+framekuyruk = tk.Frame(root, bg='darkgray')
+framekuyruk.place(relwidth=1, relheight=1)
+
 
 
 
@@ -59,25 +52,31 @@ def yazdir():
                " queue:", kuyruksay(queue3), "\n", 4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
     label11.config(text=yaz)
 
-    yaz = "ASANSÖR1", "\n", "aktiflik", asansio1.active, "\n", "mode", asansio1.mode, "\n", asansio1.floor, "\n", asansio1.destination, "\n", asansio1.capacity, "\n", countinside(
-        asansio1), "\n", asansio1.customer
-    label12.config(text=yaz)
+    yaz1 = "ASANSÖR1", "\n", "aktiflik", asansio1.active, "\n", "mode", asansio1.mode, "\n","floor :", asansio1.floor,\
+           "\n","destination :", asansio1.destination, "\n","capacity:", asansio1.capacity, "\n","countinside :", countinside(asansio1),\
+           "\n","Customer:", asansio1.customer
+    label12.config(text=yaz1)
 
-    yaz = "ASANSÖR2", "\n", "aktiflik", asansio2.active, "\n", "mode", asansio2.mode, "\n", asansio2.floor, "\n", asansio2.destination, "\n", asansio2.capacity, "\n", countinside(
-        asansio2), "\n", asansio2.customer
-    label13.config(text=yaz)
+    yaz2 = "ASANSÖR2", "\n", "aktiflik", asansio2.active, "\n", "mode", asansio2.mode, "\n","floor :", asansio2.floor,\
+           "\n","destination :", asansio2.destination, "\n","capacity:", asansio2.capacity, "\n","countinside :", countinside(asansio2),\
+           "\n","Customer:", asansio2.customer
+    label13.config(text=yaz2)
 
-    yaz = "ASANSÖR3", "\n", "aktiflik", asansio3.active, "\n", "mode", asansio3.mode, "\n", asansio3.floor, "\n", asansio3.destination, "\n", asansio3.capacity, "\n", countinside(
-        asansio3), "\n", asansio3.customer
-    label14.config(text=yaz)
+    yaz3 = "ASANSÖR3", "\n", "aktiflik", asansio3.active, "\n", "mode", asansio3.mode, "\n","floor :", asansio3.floor,\
+           "\n","destination :", asansio3.destination, "\n","capacity:", asansio3.capacity, "\n","countinside :", countinside(asansio3),\
+           "\n","Customer:", asansio3.customer
+    label14.config(text=yaz3)
 
-    yaz = "ASANSÖR4", "\n", "aktiflik", asansio4.active, "\n", "mode", asansio4.mode, "\n", asansio4.floor, "\n", asansio4.destination, "\n", asansio4.capacity, "\n", countinside(
-        asansio4), "\n", asansio4.customer
-    label15.config(text=yaz)
+    yaz4 = "ASANSÖR4", "\n", "aktiflik", asansio4.active, "\n", "mode", asansio4.mode, "\n","floor :", asansio4.floor,\
+           "\n","destination :", asansio4.destination, "\n","capacity:", asansio4.capacity, "\n","countinside :", countinside(asansio4),\
+           "\n","Customer:", asansio4.customer
+    label15.config(text=yaz4)
 
-    yaz = "ASANSÖR5", "\n", "aktiflik", asansio5.active, "\n", "mode", asansio5.mode, "\n", asansio5.floor, "\n", asansio5.destination, "\n", asansio5.capacity, "\n", countinside(
-        asansio5), "\n", asansio5.customer
-    label16.config(text=yaz)
+    yaz5 = "ASANSÖR5", "\n", "aktiflik", asansio5.active, "\n", "mode:", asansio5.mode, "\n","floor :", asansio5.floor,\
+           "\n","destination :", asansio5.destination, "\n","capacity:", asansio5.capacity, "\n","countinside :", countinside(asansio5),\
+           "\n","Customer:", asansio5.customer
+    label16.config(text=yaz5)
+
 
     asansoryazdir(asansio1)
     asansoryazdir(asansio2)
@@ -99,11 +98,15 @@ def asansoryazdir(asansor):
     print("inside:", asansor.customer)
     print("")
 def kuyrukyazdir():
-    print("0.floor",queue)
-    print("1.floor", queue1)
-    print("2.floor", queue2)
-    print("3.floor", queue3)
-    print("4.floor", queue4)
+    print("0.floor",queue.item)
+    print("1.floor", queue1.item)
+    print("2.floor", queue2.item)
+    print("3.floor", queue3.item)
+    print("4.floor", queue4.item)
+    kuyrukyaz = "0.floor", queue.item, "\n", "1.floor", queue1.item, "\n", "2.floor", queue2.item,\
+                "\n", "3.floor", queue3.item,"\n","4.floor", queue4.item
+    labelKuyruk.config(text=kuyrukyaz)
+
 
 def hedefKatcikis(f):
     cikisKati = list()
@@ -122,7 +125,7 @@ def cikanSayisicikis(f):
         insan = random.randint(1, f[cikiskati])
     f[cikiskati] -= insan
     prints(cikiskati, insan)
-    cikisYapan = [insan, 0]
+    cikisYapan = [insan, 0, cikiskati]
     return cikisYapan
 
 class topcikan(object):
@@ -142,18 +145,20 @@ def quekle():
         #print("Queue : ",queue.item)
 
 def qucikar(f):
-        while True:
-            if(f[1]>0 or f[2]>0 or f[3]>0 or f[4]>0):
-                ins = cikanSayisicikis(f)
-                time.sleep(1)
-                if (ins[1] == 1):
-                    queue1.enque(ins)
-                elif (ins[1] == 2):
-                    queue2.enque(ins)
-                elif (ins[1] == 3):
-                    queue3.enque(ins)
-                elif (ins[1] == 4):
-                    queue4.enque(ins)
+    yazdir()
+    while True:
+        if(f[1]>0 or f[2]>0 or f[3]>0 or f[4]>0):
+            ins = cikanSayisicikis(f)
+            time.sleep(1)
+            if (ins[2] == 1):
+                queue1.enque([ins[0],ins[1]])
+            elif (ins[2] == 2):
+                queue2.enque([ins[0],ins[1]])
+            elif (ins[2] == 3):
+                queue3.enque([ins[0],ins[1]])
+            elif (ins[2] == 4):
+                queue4.enque([ins[0],ins[1]])
+
 
 def asansorBinis(queue, asansio1):
     countinsid = countinside(asansio1)
@@ -193,7 +198,9 @@ def hedef(asansio):
         temp = list()
         for a in range(len(asansio.customer)):
             temp.append(asansio.customer[a][1])
+
         asansio.destination = min(temp)
+
     elif (bool(asansio.customer) == False):
         destinationLength = 5
         if (bool(queue.item) == True):
@@ -222,17 +229,6 @@ def hedef(asansio):
         if(asansio.direction == "up"):
             asansio.floor += 1
         elif(asansio.direction == "down"):
-            if(bool(asansio.customer) == True):
-                if (asansio.customer[0][1] == 0):
-                    if (bool(queue1.item)==True and asansio.floor == 1):
-                        break
-                    if (bool(queue2.item)==True and asansio.floor == 2):
-                        break
-                    if (bool(queue3.item)==True and asansio.floor == 3):
-                        break
-                    if (bool(queue4.item)==True and asansio.floor == 4):
-                        break
-
             asansio.floor -= 1
 
         #print("floor : %d asansördekiler : %s time : %s" % (asansio.floor, asansio.customer, time.ctime(time.time())))
@@ -261,7 +257,7 @@ def asansor(asansio, devam, devam1, f):
         while (isEmpty == False):
             hedef(asansio)
             asansorInis(asansio, f)
-            if not asansio.customer:
+            if(bool(asansio.customer)==False):
                 isEmpty = True
         hedef(asansio)
 
@@ -462,18 +458,40 @@ except:
 yazansor = 0, ". floor   queue:", kuyruksay(queue), "\n", 1, ". floor  all:", f[1], " queue:", kuyruksay(queue1), \
            "\n",2, ". floor  all:", f[2], " queue:", kuyruksay(queue2), "\n",3, ". floor  all:", f[3], \
            " queue:", kuyruksay(queue3), "\n",4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
-label11 = tk.Label(frame, text=yazansor, fg='white', bg='#192633')
+label11 = tk.Label(root, text=yazansor, fg='white', bg='#192633')
 label11.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
-label12 = tk.Label(frame1, text=yazansor, fg='white', bg='#192633')
-label12.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
-label13 = tk.Label(frame2, text=yazansor, fg='white', bg='#192633')
-label13.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
-label14 = tk.Label(frame3, text=yazansor, fg='white', bg='#192633')
-label14.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
-label15 = tk.Label(frame4, text=yazansor, fg='white', bg='#192633')
-label15.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
-label16 = tk.Label(frame5, text=yazansor, fg='white', bg='#192633')
-label16.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
+
+yaz1 = "ASANSÖR1", "\n", "aktiflik", asansio1.active, "\n", "mode", asansio1.mode, "\n", asansio1.floor, "\n",\
+       asansio1.destination, "\n", asansio1.capacity, "\n", countinside(asansio1), "\n", asansio1.customer
+label12 = tk.Label(frame, text=yaz1, fg='white', bg='#192633')
+label12.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+yaz2 = "ASANSÖR2", "\n", "aktiflik", asansio2.active, "\n", "mode", asansio2.mode, "\n", asansio2.floor, "\n",\
+       asansio2.destination, "\n", asansio2.capacity, "\n", countinside(asansio2), "\n", asansio2.customer
+label13 = tk.Label(frame, text=yaz2, fg='white', bg='#192633')
+label13.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+yaz3 = "ASANSÖR3", "\n", "aktiflik", asansio3.active, "\n", "mode", asansio3.mode, "\n", asansio3.floor, "\n",\
+       asansio3.destination, "\n", asansio3.capacity, "\n", countinside(asansio3), "\n", asansio3.customer
+label14 = tk.Label(frame, text=yaz3, fg='white', bg='#192633')
+label14.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+yaz4 = "ASANSÖR4", "\n", "aktiflik", asansio4.active, "\n", "mode", asansio4.mode, "\n", asansio4.floor,\
+        "\n", asansio4.destination, "\n", asansio4.capacity, "\n", countinside(asansio4), "\n", asansio4.customer
+label15 = tk.Label(frame, text=yaz4, fg='white', bg='#192633')
+label15.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+yaz5 = "ASANSÖR5", "\n", "aktiflik", asansio5.active, "\n", "mode", asansio5.mode, "\n", asansio5.floor,\
+        "\n", asansio5.destination, "\n", asansio5.capacity, "\n", countinside(asansio5), "\n", asansio5.customer
+label16 = tk.Label(frame, text=yaz5, fg='white', bg='#192633')
+label16.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+kuyrukyaz = "0.floor", queue, "\n", "1.floor", queue1, "\n", "2.floor", queue2, \
+            "\n", "3.floor", queue3, "4.floor", queue4
+
+labelKuyruk = tk.Label(framekuyruk, text=kuyrukyaz, fg='white', bg='#192633')
+labelKuyruk.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
 
 threadgiris.start()
 threadAsansor.start()
@@ -484,13 +502,11 @@ threadKontrol.start()
 label11.pack()
 frame.pack()
 label12.pack()
-frame1.pack()
 label13.pack()
-frame2.pack()
 label14.pack()
-frame3.pack()
 label15.pack()
-frame4.pack()
 label16.pack()
-frame5.pack()
+labelKuyruk.pack()
+framekuyruk.pack()
+canvas.pack()
 root.mainloop()
