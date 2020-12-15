@@ -121,6 +121,7 @@ def asansorBinis(queue, asansio1):
             elif (futureinside > 10):
                 queue.item[0][0] -= binecek
                 asansio1.customer.append([binecek, queue.item[0][1]])
+    yazdir()
     #print("asansördekiler : ",asansio1.customer)
 
 def asansorInis(asansio1, f):
@@ -169,7 +170,7 @@ def hedef(asansio):
     else:
         asansio.direction = "up"
     while (asansio.floor != asansio.destination):
-
+        yazdir()
         time.sleep(0.2)
         if(asansio.direction == "up"):
             asansio.floor += 1
