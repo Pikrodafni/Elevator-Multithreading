@@ -7,6 +7,17 @@ root =tk.Tk()
 root.geometry("1024x640+100+50")
 frame = tk.Frame(root, bg='darkgray')
 frame.place(relwidth=1, relheight=1)
+frame1 = tk.Frame(root, bg='darkgray')
+frame1.place(relwidth=1, relheight=1)
+frame2 = tk.Frame(root, bg='darkgray')
+frame2.place(relwidth=1, relheight=1)
+frame3 = tk.Frame(root, bg='darkgray')
+frame3.place(relwidth=1, relheight=1)
+frame4 = tk.Frame(root, bg='darkgray')
+frame4.place(relwidth=1, relheight=1)
+frame5 = tk.Frame(root, bg='darkgray')
+frame5.place(relwidth=1, relheight=1)
+
 
 
 f=[0,0,0,0,0]
@@ -47,9 +58,28 @@ def yazdir():
                "\n", 2, ". floor  all:", f[2], " queue:", kuyruksay(queue2), "\n", 3, ". floor  all:", f[3], \
                " queue:", kuyruksay(queue3), "\n", 4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
     label11.config(text=yaz)
-    print("Asansör1:")
+
+    yaz = "ASANSÖR1", "\n", "aktiflik", asansio1.active, "\n", "mode", asansio1.mode, "\n", asansio1.floor, "\n", asansio1.destination, "\n", asansio1.capacity, "\n", countinside(
+        asansio1), "\n", asansio1.customer
+    label12.config(text=yaz)
+
+    yaz = "ASANSÖR2", "\n", "aktiflik", asansio2.active, "\n", "mode", asansio2.mode, "\n", asansio2.floor, "\n", asansio2.destination, "\n", asansio2.capacity, "\n", countinside(
+        asansio2), "\n", asansio2.customer
+    label13.config(text=yaz)
+
+    yaz = "ASANSÖR3", "\n", "aktiflik", asansio3.active, "\n", "mode", asansio3.mode, "\n", asansio3.floor, "\n", asansio3.destination, "\n", asansio3.capacity, "\n", countinside(
+        asansio3), "\n", asansio3.customer
+    label14.config(text=yaz)
+
+    yaz = "ASANSÖR4", "\n", "aktiflik", asansio4.active, "\n", "mode", asansio4.mode, "\n", asansio4.floor, "\n", asansio4.destination, "\n", asansio4.capacity, "\n", countinside(
+        asansio4), "\n", asansio4.customer
+    label15.config(text=yaz)
+
+    yaz = "ASANSÖR5", "\n", "aktiflik", asansio5.active, "\n", "mode", asansio5.mode, "\n", asansio5.floor, "\n", asansio5.destination, "\n", asansio5.capacity, "\n", countinside(
+        asansio5), "\n", asansio5.customer
+    label16.config(text=yaz)
+
     asansoryazdir(asansio1)
-    print("Asansör2:")
     asansoryazdir(asansio2)
     print("Asansör3:")
     asansoryazdir(asansio3)
@@ -57,9 +87,9 @@ def yazdir():
     asansoryazdir(asansio4)
     print("Asansör5:")
     asansoryazdir(asansio5)
+    kuyrukyazdir()
 
 def asansoryazdir(asansor):
-
     print("aktiflik", asansor.active)
     print("mode", asansor.mode)
     print("floor", asansor.floor)
@@ -68,6 +98,12 @@ def asansoryazdir(asansor):
     print("count inside", countinside(asansor))
     print("inside:", asansor.customer)
     print("")
+def kuyrukyazdir():
+    print("0.floor",queue)
+    print("1.floor", queue1)
+    print("2.floor", queue2)
+    print("3.floor", queue3)
+    print("4.floor", queue4)
 
 def hedefKatcikis(f):
     cikisKati = list()
@@ -428,7 +464,16 @@ yazansor = 0, ". floor   queue:", kuyruksay(queue), "\n", 1, ". floor  all:", f[
            " queue:", kuyruksay(queue3), "\n",4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
 label11 = tk.Label(frame, text=yazansor, fg='white', bg='#192633')
 label11.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
-
+label12 = tk.Label(frame1, text=yazansor, fg='white', bg='#192633')
+label12.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
+label13 = tk.Label(frame2, text=yazansor, fg='white', bg='#192633')
+label13.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
+label14 = tk.Label(frame3, text=yazansor, fg='white', bg='#192633')
+label14.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
+label15 = tk.Label(frame4, text=yazansor, fg='white', bg='#192633')
+label15.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
+label16 = tk.Label(frame5, text=yazansor, fg='white', bg='#192633')
+label16.place(relx=0.1, rely=0.2, relwidth=2, relheight=2)
 
 threadgiris.start()
 threadAsansor.start()
@@ -438,4 +483,14 @@ threadKontrol.start()
 
 label11.pack()
 frame.pack()
+label12.pack()
+frame1.pack()
+label13.pack()
+frame2.pack()
+label14.pack()
+frame3.pack()
+label15.pack()
+frame4.pack()
+label16.pack()
+frame5.pack()
 root.mainloop()
