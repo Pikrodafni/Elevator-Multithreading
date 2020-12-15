@@ -125,7 +125,7 @@ def cikanSayisicikis(f):
         insan = random.randint(1, f[cikiskati])
     f[cikiskati] -= insan
     prints(cikiskati, insan)
-    cikisYapan = [insan, 0, cikiskati]
+    cikisYapan = [insan, 0]
     return cikisYapan
 
 class topcikan(object):
@@ -150,14 +150,14 @@ def qucikar(f):
         if(f[1]>0 or f[2]>0 or f[3]>0 or f[4]>0):
             ins = cikanSayisicikis(f)
             time.sleep(1)
-            if (ins[2] == 1):
-                queue1.enque([ins[0],ins[1]])
-            elif (ins[2] == 2):
-                queue2.enque([ins[0],ins[1]])
-            elif (ins[2] == 3):
-                queue3.enque([ins[0],ins[1]])
-            elif (ins[2] == 4):
-                queue4.enque([ins[0],ins[1]])
+            if (ins[1] == 1):
+                queue1.enque(ins)
+            elif (ins[1] == 2):
+                queue2.enque(ins)
+            elif (ins[1] == 3):
+                queue3.enque(ins)
+            elif (ins[1] == 4):
+                queue4.enque(ins)
 
 
 def asansorBinis(queue, asansio1):
@@ -198,9 +198,7 @@ def hedef(asansio):
         temp = list()
         for a in range(len(asansio.customer)):
             temp.append(asansio.customer[a][1])
-
         asansio.destination = min(temp)
-
     elif (bool(asansio.customer) == False):
         destinationLength = 5
         if (bool(queue.item) == True):
@@ -229,6 +227,17 @@ def hedef(asansio):
         if(asansio.direction == "up"):
             asansio.floor += 1
         elif(asansio.direction == "down"):
+            if(bool(asansio.customer) == True):
+                if (asansio.customer[0][1] == 0):
+                    if (bool(queue1.item)==True and asansio.floor == 1):
+                        break
+                    if (bool(queue2.item)==True and asansio.floor == 2):
+                        break
+                    if (bool(queue3.item)==True and asansio.floor == 3):
+                        break
+                    if (bool(queue4.item)==True and asansio.floor == 4):
+                        break
+
             asansio.floor -= 1
 
         #print("floor : %d asansördekiler : %s time : %s" % (asansio.floor, asansio.customer, time.ctime(time.time())))
@@ -257,7 +266,7 @@ def asansor(asansio, devam, devam1, f):
         while (isEmpty == False):
             hedef(asansio)
             asansorInis(asansio, f)
-            if(bool(asansio.customer)==False):
+            if not asansio.customer:
                 isEmpty = True
         hedef(asansio)
 
