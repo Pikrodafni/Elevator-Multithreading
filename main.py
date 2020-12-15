@@ -8,6 +8,7 @@ root.geometry("1024x640+100+50")
 frame = tk.Frame(root, bg='darkgray')
 frame.place(relwidth=1, relheight=1)
 
+
 f=[0,0,0,0,0]
 
 def girenSayisi():
@@ -42,13 +43,10 @@ def yazdir():
     print(3, ". floor  all:", f[3], " queue:", kuyruksay(queue3))
     print(4, ". floor  all:", f[4], " queue:", kuyruksay(queue4))
     print("exitcount:",cikantop.cikan)
-    yazansor = 0, ". floor   queue:", kuyruksay(queue),"\n",1, ". floor  all:", f[1], " queue:", kuyruksay(queue1),\
-               2, ". floor  all:", f[2], " queue:", kuyruksay(queue2),3, ". floor  all:", f[3],\
-               " queue:", kuyruksay(queue3),4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
-    label11 = tk.Label(frame, text=yazansor, fg='white', bg='#192633')
-    label11.place(relx=0.1, rely=0.2, relwidth=0.4, relheight=0.4)
-    label11.pack()
-
+    yaz = 0, ". floor   queue:", kuyruksay(queue), "\n", 1, ". floor  all:", f[1], " queue:", kuyruksay(queue1), \
+               "\n", 2, ". floor  all:", f[2], " queue:", kuyruksay(queue2), "\n", 3, ". floor  all:", f[3], \
+               " queue:", kuyruksay(queue3), "\n", 4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
+    label11.config(text=yaz)
     print("Asansör1:")
     asansoryazdir(asansio1)
     print("Asansör2:")
@@ -425,12 +423,19 @@ try:
 except:
     print("Error: unable to start thread")
 
+yazansor = 0, ". floor   queue:", kuyruksay(queue), "\n", 1, ". floor  all:", f[1], " queue:", kuyruksay(queue1), \
+           "\n",2, ". floor  all:", f[2], " queue:", kuyruksay(queue2), "\n",3, ". floor  all:", f[3], \
+           " queue:", kuyruksay(queue3), "\n",4, ". floor  all:", f[4], " queue:", kuyruksay(queue4)
+label11 = tk.Label(frame, text=yazansor, fg='white', bg='#192633')
+label11.place(relx=0.1, rely=0.2, relwidth=1, relheight=1)
+
+
 threadgiris.start()
 threadAsansor.start()
 threadcikis.start()
 threadKontrol.start()
 
 
-
+label11.pack()
 frame.pack()
 root.mainloop()
